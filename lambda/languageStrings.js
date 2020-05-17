@@ -38,7 +38,7 @@ module.exports = {
     },
     pt: {
         translation: {
-            WELCOME_MSG: `Olá! Boas vindas à skill Feliz Aniversário. Quando é o seu aniversário?`,
+            WELCOME_MSG: `Olá! Bem vindo à sua meta diária. Quais são seus planos para hoje?`,
             WELCOME_REPROMPT_MSG: `Eu nasci em 6 de novembro de 2014. Quando você nasceu?`,
             WELCOME_BACK_MSG: `Que bom que você está de volta! Parece que falta {{count}} dia até o seu {{age}}º aniversário.`,
             WELCOME_BACK_MSG_plural: `Que bom que você está de volta! Parece que faltam {{count}} dias até o seu {{age}}º aniversário.`,
