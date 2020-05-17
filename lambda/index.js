@@ -128,28 +128,20 @@ const LaunchRequestHandler = {
  * Handles CaptureBirthdayIntent requests sent by Alexa (when a user specify a birthdate)
  * Note : this request is sent when the user makes a request that corresponds to CaptureBirthdayIntent intent defined in your intent schema.
  */
-const BirthdayIntentHandler = {
+const GoalsIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CaptureBirthdayIntent';
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GoalsCaptureIntent';
     },
     async handle(handlerInput) {
         const { attributesManager, requestEnvelope } = handlerInput;
 
-        const year = Alexa.getSlotValue(requestEnvelope, 'year');
-        const month = Alexa.getSlotValue(requestEnvelope, 'month');
-        const day = Alexa.getSlotValue(requestEnvelope, 'day');
+        const goals = Alexa.getSlotValue(requestEnvelope, 'goals');
 
-        const birthdayAttributes = {
-            "year": year,
-            "month": month,
-            "day": day
+        // attributesManager.setPersistentAttributes(goals);
+        // await attributesManager.savePersistentAttributes();
 
-        };
-        attributesManager.setPersistentAttributes(birthdayAttributes);
-        await attributesManager.savePersistentAttributes();
-
-        const speakOutput = handlerInput.t('REGISTER_BIRTHDAY_MSG', { month: month, day: day, year: year });
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
