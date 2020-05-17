@@ -319,7 +319,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         HasBirthdayLaunchRequestHandler,
         LaunchRequestHandler,
-        BirthdayIntentHandler,
+        GoalsIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
