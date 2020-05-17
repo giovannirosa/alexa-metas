@@ -138,7 +138,7 @@ const GoalsIntentHandler = {
 
         const goals = Alexa.getSlotValue(requestEnvelope, 'goals');
         
-        console.log(goals)
+        console.log(goals);
 
         // attributesManager.setPersistentAttributes(goals);
         // await attributesManager.savePersistentAttributes();
