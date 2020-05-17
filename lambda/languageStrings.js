@@ -10,7 +10,7 @@ module.exports = {
         translation: {
             WELCOME_MSG: `Olá! Bem vindo à sua meta diária. Quais são seus planos para hoje?`,
             WELCOME_REPROMPT_MSG: `Meu plano para hoje é ficar aqui na minha caixinha. Quais são os seus?`,
-            WELCOME_BACK_MSG: `Hmmmmmmmm deixa eu ver aqui. Parece que suas metas para hoje são {{goals}}.`,
+            WELCOME_BACK_MSG: `Hm deixa eu ver aqui. Parece que suas metas para hoje são {{goals}}.`,
             WELCOME_BACK_MSG_plural: `Que bom que você está de volta! Parece que faltam {{count}} dias até o seu {{age}}º aniversário.`,
             NO_GOALS_MSG: `Parece que você não tem metas para hoje!`,
             REGISTER_GOALS_MSG: `Obrigada, eu vou lembrar que suas metas para hoje são {{goals}}.`,
