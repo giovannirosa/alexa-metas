@@ -86,10 +86,11 @@ const GoalsIntentHandler = {
         const { attributesManager, requestEnvelope } = handlerInput;
 
         const goals = Alexa.getSlotValue(requestEnvelope, 'goals');
+        const date = moment().subtract(1, 'days');
         
-        console.log(goals, moment());
+        console.log(goals, date);
 
-        attributesManager.setPersistentAttributes({goals, date: moment()});
+        attributesManager.setPersistentAttributes({goals, date});
         await attributesManager.savePersistentAttributes();
 
         const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals });
