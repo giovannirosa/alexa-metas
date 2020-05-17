@@ -86,7 +86,7 @@ const GoalsIntentHandler = {
         const { attributesManager, requestEnvelope } = handlerInput;
 
         const goals = Alexa.getSlotValue(requestEnvelope, 'goals');
-        const date = moment().subtract(1, 'days');
+        const date = moment();
         
         console.log(goals, date);
 
