@@ -9,10 +9,10 @@ module.exports = {
     pt: {
         translation: {
             WELCOME_MSG: `Olá! Bem vindo à sua meta diária. Quais são seus planos para hoje?`,
-            WELCOME_REPROMPT_MSG: `Meus planos para hoje é ficar aqui na minha caixinha. E os seus?`,
+            WELCOME_REPROMPT_MSG: `Meu plano para hoje é ficar aqui na minha caixinha. Quais são os seus?`,
             WELCOME_BACK_MSG: `Hmm deixa eu ver aqui. Parece que suas metas para hoje são {{goals}}.`,
             WELCOME_BACK_MSG_plural: `Que bom que você está de volta! Parece que faltam {{count}} dias até o seu {{age}}º aniversário.`,
-            HAPPY_BIRTHDAY_MSG: `Feliz {{age}}º aniversário!`,
+            NO_GOALS_MSG: `Parece que você não tem metas para hoje!`,
             REGISTER_GOALS_MSG: `Obrigada, eu vou lembrar que suas metas para hoje são {{goals}}.`,
             HELP_MSG: `Você pode me dizer o dia em que você nasceu e eu vou tomar nota. Você também pode dizer, "anote meu aniversário" eu irei guiar sua interação. Qual deles você quer tentar?`,
             GOODBYE_MSG: `Tchau!`,
