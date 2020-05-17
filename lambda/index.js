@@ -245,6 +245,13 @@ const LoadGoalsInterceptor = {
         const sessionAttributes = await attributesManager.getPersistentAttributes() || {};
 
         const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        const date = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : '';
+        
+        const diffDays = moment().diff(moment(date), 'days');
+        console.log(date, diffDays);
+        if (diffDays > 0) {
+            await attributesManager.deletePersistentAttributes();
+        }
 
         if (goals) {
             attributesManager.setSessionAttributes(sessionAttributes);
