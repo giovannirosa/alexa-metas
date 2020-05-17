@@ -26,79 +26,28 @@ const moment = require('moment-timezone');
  * Handles LaunchRequest requests sent by Alexa when a birthdate has been registered
  * Note : this type of request is send when the user invokes your skill without providing a specific intent.
  */
-const HasBirthdayLaunchRequestHandler = {
+const HasGoalsLaunchRequestHandler = {
     canHandle(handlerInput) {
         const { attributesManager } = handlerInput;
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
-        const year = sessionAttributes.hasOwnProperty('year') ? sessionAttributes.year : 0;
-        const month = sessionAttributes.hasOwnProperty('month') ? sessionAttributes.month : 0;
-        const day = sessionAttributes.hasOwnProperty('day') ? sessionAttributes.day : 0;
+        const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
 
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest'
-            && year
-            && month
-            && day;
+            && goals;
     },
     async handle(handlerInput) {
         const { serviceClientFactory, requestEnvelope, attributesManager } = handlerInput;
         const deviceId = Alexa.getDeviceId(requestEnvelope)
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
-        const year = sessionAttributes.hasOwnProperty('year') ? sessionAttributes.year : 0;
-        const month = sessionAttributes.hasOwnProperty('month') ? sessionAttributes.month : 0;
-        const day = sessionAttributes.hasOwnProperty('day') ? sessionAttributes.day : 0;
-
-        let userTimeZone;
-        try {
-            const upsServiceClient = serviceClientFactory.getUpsServiceClient();
-            userTimeZone = await upsServiceClient.getSystemTimeZone(deviceId);
-        } catch (error) {
-            if (error.name !== 'ServiceError') {
-                const errorSpeechText = handlerInput.t('ERROR_TIMEZONE_MSG');
-                return handlerInput.responseBuilder.speak(errorSpeechText).getResponse();
-            }
-            console.log('error', error.message);
-        }
-        console.log('userTimeZone', userTimeZone);
-
-        // getting the current date with the time set to the start of the day, aka 00:00AM
-        const currentDate = moment().tz(userTimeZone).startOf('day')
-        // getting the current year
-        const currentYear = currentDate.year();
+        const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
         
-        console.log('currentDate:', currentDate.toString());
-        
-        // getting the next birthday
-        const dateStr = currentYear.toString() + ' ' + month + ' ' + day.toString();
-        const locale = Alexa.getLocale(requestEnvelope);
-        let nextBirthday = moment(dateStr, 'YYYY MMM DD', locale);
-        console.log('nextBirthday:', nextBirthday.toString())
-
-        // calculate the difference between the current date and the next birthday
-        let diffDays = nextBirthday.diff(currentDate, 'days');
-
-        // setting the default speakOutput to Happy xth Birthday!! 
-        // Alexa will automatically correct the ordinal for you.
-        // no need to worry about when to use st, th, rd
-        let age = currentYear - year;
-        let speakOutput = handlerInput.t('HAPPY_BIRTHDAY_MSG', { age: age });
-
-        // checking if birthday is still to happen or...
-        if (diffDays > 0) {
-            speakOutput = handlerInput.t('WELCOME_BACK_MSG', { count: diffDays, age: age });
-        } 
-        // has already happened this year
-        else if (diffDays < 0) {
-            // in this case, add one year to the next birthday,
-            nextBirthday = nextBirthday.add(1, 'Y');
-            // recalculate the difference,
-            diffDays = nextBirthday.diff(currentDate, 'days')
-            // and add on extra year to the age
-            age++
-            speakOutput = handlerInput.t('WELCOME_BACK_MSG', { count: diffDays, age: age });
+        let speakOutput = handlerInput.t('NO_GOALS_MSG');
+        if (goals) {
+            speakOutput = handlerInput.t('WELCOME_BACK_MSG', { goals });
         }
-
+        
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .getResponse();
@@ -140,8 +89,8 @@ const GoalsIntentHandler = {
         
         console.log(goals);
 
-        // attributesManager.setPersistentAttributes(goals);
-        // await attributesManager.savePersistentAttributes();
+        attributesManager.setPersistentAttributes({goals});
+        await attributesManager.savePersistentAttributes();
 
         const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals });
         return handlerInput.responseBuilder
@@ -290,16 +239,14 @@ const LocalisationRequestInterceptor = {
  * It's a way to wrap promises and wait for the result of an external async operation
  * Like getting and saving the persistent attributes
  * */
-const LoadBirthdayInterceptor = {
+const LoadGoalsInterceptor = {
     async process(handlerInput) {
         const { attributesManager } = handlerInput;
         const sessionAttributes = await attributesManager.getPersistentAttributes() || {};
 
-        const year = sessionAttributes.hasOwnProperty('year') ? sessionAttributes.year : 0;
-        const month = sessionAttributes.hasOwnProperty('month') ? sessionAttributes.month : 0;
-        const day = sessionAttributes.hasOwnProperty('day') ? sessionAttributes.day : 0;
+        const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
 
-        if (year && month && day) {
+        if (goals) {
             attributesManager.setSessionAttributes(sessionAttributes);
         }
     }
@@ -319,7 +266,7 @@ exports.handler = Alexa.SkillBuilders.custom()
         new persistenceAdapter.S3PersistenceAdapter({ bucketName: process.env.S3_PERSISTENCE_BUCKET })
     )
     .addRequestHandlers(
-        HasBirthdayLaunchRequestHandler,
+        HasGoalsLaunchRequestHandler,
         LaunchRequestHandler,
         GoalsIntentHandler,
         HelpIntentHandler,
@@ -331,7 +278,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addRequestInterceptors(
         LocalisationRequestInterceptor,
         LoggingRequestInterceptor,
-        LoadBirthdayInterceptor
+        LoadGoalsInterceptor
     )
     .addResponseInterceptors(
         LoggingResponseInterceptor)
