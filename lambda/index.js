@@ -51,8 +51,11 @@ const HasGoalsLaunchRequestHandler = {
             speakOutput = handlerInput.t('WELCOME_BACK_MSG', { goals: goalsStr });
         }
         
+        const repromptOutput = handlerInput.t('WELCOME_BACK_REPROMPT_MSG');
+        
         return handlerInput.responseBuilder
             .speak(speakOutput)
+            .reprompt(repromptOutput)
             .getResponse();
     }
 };
