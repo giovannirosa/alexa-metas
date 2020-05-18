@@ -42,10 +42,11 @@ const HasGoalsLaunchRequestHandler = {
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
         const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        const goalsStr = goals.join(', ');
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
-        if (goals) {
-            speakOutput = handlerInput.t('WELCOME_BACK_MSG', { goals });
+        if (goalsStr) {
+            speakOutput = handlerInput.t('WELCOME_BACK_MSG', { goalsStr });
         }
         
         return handlerInput.responseBuilder
@@ -74,8 +75,8 @@ const LaunchRequestHandler = {
 };
 
 /**
- * Handles CaptureBirthdayIntent requests sent by Alexa (when a user specify a birthdate)
- * Note : this request is sent when the user makes a request that corresponds to CaptureBirthdayIntent intent defined in your intent schema.
+ * Handles GoalsCaptureIntent requests sent by Alexa (when a user specify activities)
+ * Note : this request is sent when the user makes a request that corresponds to GoalsCaptureIntent intent defined in your intent schema.
  */
 const GoalsIntentHandler = {
     canHandle(handlerInput) {
@@ -86,7 +87,46 @@ const GoalsIntentHandler = {
         const { attributesManager, requestEnvelope } = handlerInput;
 
         const goals = Alexa.getSlotValue(requestEnvelope, 'goals');
+        const goalList = goals.split(',');
+        const finalGoalList = [];
+        goalList.forEach(g => {
+            if (g.includes(' e ')) {
+                g.split(' e ').forEach(gs => finalGoalList.push(gs));
+            } else {
+                finalGoalList.push(g);
+            }
+        })
         const date = moment();
+        console.log(finalGoalList, date);
+
+        attributesManager.setPersistentAttributes({goals: finalGoalList, date});
+        await attributesManager.savePersistentAttributes();
+
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals });
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .withShouldEndSession(true) // force the skill to close the session after confirming the birthday date
+            .getResponse();
+    }
+};
+
+/**
+ * Handles GoalsAdditionIntent requests sent by Alexa (when a user specify add activities)
+ * Note : this request is sent when the user makes a request that corresponds to GoalsAdditionIntent intent defined in your intent schema.
+ */
+const AddGoalsIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GoalsAdditionIntent';
+    },
+    async handle(handlerInput) {
+        const { attributesManager, requestEnvelope } = handlerInput;
+        const sessionAttributes = attributesManager.getSessionAttributes() || {};
+
+        const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        const addGoals = Alexa.getSlotValue(requestEnvelope, 'goals');
+        
         
         console.log(goals, date);
 
