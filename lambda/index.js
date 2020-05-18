@@ -23,7 +23,7 @@ const moment = require('moment-timezone');
 /////////////////////////////////
 
 /**
- * Handles LaunchRequest requests sent by Alexa when a birthdate has been registered
+ * Handles LaunchRequest requests sent by Alexa when activities has been registered
  * Note : this type of request is send when the user invokes your skill without providing a specific intent.
  */
 const HasGoalsLaunchRequestHandler = {
