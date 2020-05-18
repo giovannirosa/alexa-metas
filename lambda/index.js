@@ -139,7 +139,7 @@ const AddGoalsIntentHandler = {
         attributesManager.setPersistentAttributes({goals: mergedGoals});
         await attributesManager.savePersistentAttributes();
 
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { mergedGoals });
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: mergedGoals });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
@@ -171,7 +171,7 @@ const DelGoalsIntentHandler = {
         attributesManager.setPersistentAttributes({goals: purgedGoals});
         await attributesManager.savePersistentAttributes();
 
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { purgedGoals });
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: purgedGoals });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
