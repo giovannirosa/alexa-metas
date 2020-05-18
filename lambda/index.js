@@ -31,7 +31,7 @@ const HasGoalsLaunchRequestHandler = {
         const { attributesManager } = handlerInput;
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
-        const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : null;
 
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest'
             && goals;
@@ -41,11 +41,11 @@ const HasGoalsLaunchRequestHandler = {
         const deviceId = Alexa.getDeviceId(requestEnvelope)
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
-        const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : [];
         const goalsStr = goals.join(', ');
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
-        if (goalsStr) {
+        if (goals.length > 0) {
             speakOutput = handlerInput.t('WELCOME_BACK_MSG', { goalsStr });
         }
         
@@ -318,8 +318,8 @@ const LoadGoalsInterceptor = {
         const { attributesManager } = handlerInput;
         const sessionAttributes = await attributesManager.getPersistentAttributes() || {};
 
-        const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
-        const date = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : '';
+        const goals = sessionAttributes.hasOwnProperty('goals') && sessionAttributes.goals.length > 0 ? sessionAttributes.goals : null;
+        const date = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : null;
         
         const diffDays = moment().diff(moment(date), 'days');
         console.log(date, diffDays);
