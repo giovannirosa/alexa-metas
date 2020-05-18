@@ -112,7 +112,7 @@ const GoalsIntentHandler = {
 };
 
 /**
- * Handles GoalsAdditionIntent requests sent by Alexa (when a user specify add activities)
+ * Handles GoalsAdditionIntent requests sent by Alexa (when a user add activities)
  * Note : this request is sent when the user makes a request that corresponds to GoalsAdditionIntent intent defined in your intent schema.
  */
 const AddGoalsIntentHandler = {
@@ -126,14 +126,47 @@ const AddGoalsIntentHandler = {
 
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
         const addGoals = Alexa.getSlotValue(requestEnvelope, 'goals');
+        const mergedGoals = [...storedGoals, ...addGoals];
         
         
-        console.log(goals, date);
+        console.log(mergedGoals);
 
-        attributesManager.setPersistentAttributes({goals, date});
+        attributesManager.setPersistentAttributes({goals: mergedGoals});
         await attributesManager.savePersistentAttributes();
 
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals });
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { mergedGoals });
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .withShouldEndSession(true) // force the skill to close the session after confirming the birthday date
+            .getResponse();
+    }
+};
+
+/**
+ * Handles GoalsRemovalIntent requests sent by Alexa (when a user remove activities)
+ * Note : this request is sent when the user makes a request that corresponds to GoalsRemovalIntent intent defined in your intent schema.
+ */
+const DelGoalsIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GoalsRemovalIntent';
+    },
+    async handle(handlerInput) {
+        const { attributesManager, requestEnvelope } = handlerInput;
+        const sessionAttributes = attributesManager.getSessionAttributes() || {};
+
+        const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        const delGoals = Alexa.getSlotValue(requestEnvelope, 'goals');
+        const purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
+        
+        
+        console.log(purgedGoals);
+
+        attributesManager.setPersistentAttributes({goals: purgedGoals});
+        await attributesManager.savePersistentAttributes();
+
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { purgedGoals });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
