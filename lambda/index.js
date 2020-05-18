@@ -48,7 +48,7 @@ const HasGoalsLaunchRequestHandler = {
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
         if (goals.length > 0) {
-            speakOutput = handlerInput.t('WELCOME_BACK_MSG', { goalsStr });
+            speakOutput = handlerInput.t('WELCOME_BACK_MSG', { goals: goalsStr });
         }
         
         return handlerInput.responseBuilder
