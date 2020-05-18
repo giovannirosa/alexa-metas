@@ -44,6 +44,8 @@ const HasGoalsLaunchRequestHandler = {
         const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : [];
         const goalsStr = goals.join(', ');
         
+        console.log(goals, goalsStr);
+        
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
         if (goals.length > 0) {
             speakOutput = handlerInput.t('WELCOME_BACK_MSG', { goalsStr });
