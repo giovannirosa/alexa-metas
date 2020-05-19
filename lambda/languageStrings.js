@@ -8,7 +8,11 @@
 module.exports = {
     pt: {
         translation: {
-            WELCOME_MSG: `Olá! Bem vindo à sua meta diária. Quais são seus planos para hoje?`,
+            SKILL_NAME: 'metas do dia',
+            WELCOME_MSG: [`Olá! Bem vindo as suas metas do dia. Quais são seus planos para hoje?`, 
+                        `Bem vindo à sua caixinha de metas. Quais são as metas do dia?`, 
+                        `Ei, um novo dia pede metas renovadas. Que atividades você quer fazer hoje?`, 
+                        'Opa, pera ai, deixa eu pegar a minha caneta! Pronto... quais são as metas de hoje?'],
             WELCOME_REPROMPT_MSG: `Meu plano para hoje é ficar aqui na minha caixinha. Quais são os seus?`,
             WELCOME_BACK_MSG: `Hm deixa eu ver aqui... Parece que suas metas para hoje são {{goals}}. Você quer adicionar outras ou remover alguma delas?`,
             WELCOME_BACK_REPROMPT_MSG: `Você quer adicionar ou remover alguma meta para hoje?`,
