@@ -24,14 +24,22 @@ const moment = require('moment-timezone');
 
 const goalsToList = (goals) => {
     const goalList = goals.split(',');
-        const finalGoalList = [];
-        goalList.forEach(g => {
-            if (g.includes(' e ')) {
-                g.split(' e ').forEach(gs => finalGoalList.push(gs));
-            } else {
-                finalGoalList.push(g);
-            }
-        })
+    const finalGoalList = [];
+    goalList.forEach(g => {
+        if (g.includes(' e ')) {
+            g.split(' e ').forEach(gs => finalGoalList.push(gs));
+        } else {
+            finalGoalList.push(g);
+        }
+    });
+    
+    return finalGoalList;
+}
+
+const listToGoals = (list) => {
+    const str = list.join(', ');
+    const n = str.lastIndexOf(', ');
+    return str.slice(0, n) + str.slice(n).replace(', ', ' e ');
 }
 
 /**
@@ -54,7 +62,7 @@ const HasGoalsLaunchRequestHandler = {
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
         const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : [];
-        const goalsStr = goals.join(', ');
+        const goalsStr = listToGoals(goals);
         
         console.log(goals, goalsStr);
         
@@ -104,19 +112,11 @@ const GoalsIntentHandler = {
         const { attributesManager, requestEnvelope } = handlerInput;
 
         const goals = Alexa.getSlotValue(requestEnvelope, 'goals');
-        const goalList = goals.split(',');
-        const finalGoalList = [];
-        goalList.forEach(g => {
-            if (g.includes(' e ')) {
-                g.split(' e ').forEach(gs => finalGoalList.push(gs));
-            } else {
-                finalGoalList.push(g);
-            }
-        })
+        const goalList = goalsToList(goals);
         const date = moment();
-        console.log(finalGoalList, date);
+        console.log(goalList, date);
 
-        attributesManager.setPersistentAttributes({goals: finalGoalList, date});
+        attributesManager.setPersistentAttributes({goals: goalList, date});
         await attributesManager.savePersistentAttributes();
 
         const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals });
@@ -142,7 +142,7 @@ const AddGoalsIntentHandler = {
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
-        const addGoals = Alexa.getSlotValue(requestEnvelope, 'goals');
+        const addGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
         const mergedGoals = [...storedGoals, ...addGoals];
         
         
@@ -150,8 +150,10 @@ const AddGoalsIntentHandler = {
 
         attributesManager.setPersistentAttributes({goals: mergedGoals});
         await attributesManager.savePersistentAttributes();
-
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: mergedGoals });
+        
+        const goalsStr = listToGoals(mergedGoals);
+        
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: goalsStr });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
@@ -174,7 +176,7 @@ const DelGoalsIntentHandler = {
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
-        const delGoals = Alexa.getSlotValue(requestEnvelope, 'goals');
+        const delGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
         const purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
         
         
@@ -182,8 +184,10 @@ const DelGoalsIntentHandler = {
 
         attributesManager.setPersistentAttributes({goals: purgedGoals});
         await attributesManager.savePersistentAttributes();
+        
+        const goalsStr = listToGoals(purgedGoals);
 
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: purgedGoals });
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: goalsStr });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
