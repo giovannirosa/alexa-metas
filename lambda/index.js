@@ -240,7 +240,7 @@ const ListGoalsIntentHandler = {
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
         const goalsStr = listToGoals(storedGoals);
 
-        const speakOutput = randomPhrase(handlerInput.t('WELCOME_BACK_MSG', { goals: goalsStr }));
+        const speakOutput = handlerInput.t('WELCOME_BACK_MSG' + randomIndex(2), { goals: goalsStr });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .withShouldEndSession(false)
