@@ -131,8 +131,7 @@ const GoalsIntentHandler = {
         const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: listToGoals(goalList) });
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .withShouldEndSession(true) // force the skill to close the session after confirming the birthday date
+            .withShouldEndSession(false)
             .getResponse();
     }
 };
@@ -165,8 +164,7 @@ const AddGoalsIntentHandler = {
         const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: goalsStr });
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .withShouldEndSession(true) // force the skill to close the session after confirming the birthday date
+            .withShouldEndSession(false)
             .getResponse();
     }
 };
@@ -199,8 +197,7 @@ const DelGoalsIntentHandler = {
         const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: goalsStr });
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .withShouldEndSession(true) // force the skill to close the session after confirming the birthday date
+            .withShouldEndSession(false)
             .getResponse();
     }
 };
@@ -222,8 +219,7 @@ const CleanGoalsIntentHandler = {
         const speakOutput = handlerInput.t('CLEAN_GOALS_MSG');
         return handlerInput.responseBuilder
             .speak(speakOutput)
-            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            .withShouldEndSession(false) // force the skill to close the session after confirming the birthday date
+            .withShouldEndSession(false)
             .getResponse();
     }
 };
