@@ -42,7 +42,7 @@ const listToGoals = (list) => {
     return str.slice(0, n) + str.slice(n).replace(', ', ' e ');
 }
 
-const randomPhrase = (myData) => myData[Math.floor(Math.random() * myData.length)];
+const randomIndex = (maxVal) => Math.floor(Math.random() * maxVal) + 1;
 
 /**
  * Handles LaunchRequest requests sent by Alexa when activities has been registered
@@ -70,7 +70,7 @@ const HasGoalsLaunchRequestHandler = {
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
         if (goals.length > 0) {
-            speakOutput = randomPhrase(handlerInput.t('WELCOME_BACK_MSG', { goals: goalsStr }));
+            speakOutput = handlerInput.t('WELCOME_BACK_MSG' + randomIndex(2), { goals: goalsStr });
         }
         
         return handlerInput.responseBuilder
@@ -89,7 +89,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = randomPhrase(handlerInput.t('WELCOME_MSG'));
+        const speakOutput = handlerInput.t('WELCOME_MSG' + randomIndex(4));
         const repromptOutput = handlerInput.t('WELCOME_REPROMPT_MSG');
 
         return handlerInput.responseBuilder
