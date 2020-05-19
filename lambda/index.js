@@ -197,6 +197,28 @@ const DelGoalsIntentHandler = {
 };
 
 /**
+ * Handles GoalsCleaningIntent requests sent by Alexa (when a user clean activities)
+ * Note : this request is sent when the user makes a request that corresponds to GoalsCleaningIntent intent defined in your intent schema.
+ */
+const CleanGoalsIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GoalsCleaningIntent';
+    },
+    async handle(handlerInput) {
+        const { attributesManager, requestEnvelope } = handlerInput;
+        await attributesManager.deletePersistentAttributes();
+
+        const speakOutput = handlerInput.t('CLEAN_GOALS_MSG');
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            // .withShouldEndSession(true) // force the skill to close the session after confirming the birthday date
+            .getResponse();
+    }
+};
+
+/**
  * Handles AMAZON.HelpIntent requests sent by Alexa 
  * Note : this request is sent when the user makes a request that corresponds to AMAZON.HelpIntent intent defined in your intent schema.
  */
