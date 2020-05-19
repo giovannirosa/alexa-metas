@@ -73,6 +73,7 @@ const HasGoalsLaunchRequestHandler = {
         
         return handlerInput.responseBuilder
             .speak(speakOutput)
+            .withShouldEndSession(false)
             .getResponse();
     }
 };
