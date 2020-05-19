@@ -225,6 +225,30 @@ const CleanGoalsIntentHandler = {
 };
 
 /**
+ * Handles GoalsListingIntent requests sent by Alexa (when a user list activities)
+ * Note : this request is sent when the user makes a request that corresponds to GoalsListingIntent intent defined in your intent schema.
+ */
+const ListGoalsIntentHandler = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GoalsListingIntent';
+    },
+    async handle(handlerInput) {
+        const { attributesManager, requestEnvelope } = handlerInput;
+        const sessionAttributes = attributesManager.getSessionAttributes() || {};
+        
+        const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        const goalsStr = listToGoals(storedGoals);
+
+        const speakOutput = randomPhrase(handlerInput.t('WELCOME_BACK_MSG', { goals: goalsStr }));
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .withShouldEndSession(false)
+            .getResponse();
+    }
+};
+
+/**
  * Handles AMAZON.HelpIntent requests sent by Alexa 
  * Note : this request is sent when the user makes a request that corresponds to AMAZON.HelpIntent intent defined in your intent schema.
  */
