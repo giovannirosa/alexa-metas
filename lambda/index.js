@@ -207,6 +207,7 @@ const CleanGoalsIntentHandler = {
     },
     async handle(handlerInput) {
         const { attributesManager, requestEnvelope } = handlerInput;
+        attributesManager.setSessionAttributes({});
         await attributesManager.deletePersistentAttributes();
 
         const speakOutput = handlerInput.t('CLEAN_GOALS_MSG');
