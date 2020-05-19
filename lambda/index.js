@@ -332,7 +332,7 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         console.log(`~~~~ Error handled: ${error.message}`);
-        const speakOutput = handlerInput.t('ERROR_MSG');
+        const speakOutput = handlerInput.t('ERROR_MSG' + randomIndex(2));
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
