@@ -353,6 +353,8 @@ exports.handler = Alexa.SkillBuilders.custom()
         HasGoalsLaunchRequestHandler,
         LaunchRequestHandler,
         GoalsIntentHandler,
+        AddGoalsIntentHandler,
+        DelGoalsIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
