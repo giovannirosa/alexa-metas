@@ -22,6 +22,18 @@ const moment = require('moment-timezone');
 // Handlers Definition
 /////////////////////////////////
 
+const goalsToList = (goals) => {
+    const goalList = goals.split(',');
+        const finalGoalList = [];
+        goalList.forEach(g => {
+            if (g.includes(' e ')) {
+                g.split(' e ').forEach(gs => finalGoalList.push(gs));
+            } else {
+                finalGoalList.push(g);
+            }
+        })
+}
+
 /**
  * Handles LaunchRequest requests sent by Alexa when activities has been registered
  * Note : this type of request is send when the user invokes your skill without providing a specific intent.
