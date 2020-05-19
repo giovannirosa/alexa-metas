@@ -110,16 +110,25 @@ const GoalsIntentHandler = {
     },
     async handle(handlerInput) {
         const { attributesManager, requestEnvelope } = handlerInput;
+        const sessionAttributes = attributesManager.getSessionAttributes() || {};
+        
+        const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        
+        let goalList = [];
+        if (storedGoals) {
+            const addGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
+            goalList = [...storedGoals, ...addGoals];
+            console.log(goalList);
+        } else {
+            const goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
+            const date = moment();
+            console.log(goalList, date);
+            attributesManager.setPersistentAttributes({goals: goalList, date});
+        }
 
-        const goals = Alexa.getSlotValue(requestEnvelope, 'goals');
-        const goalList = goalsToList(goals);
-        const date = moment();
-        console.log(goalList, date);
-
-        attributesManager.setPersistentAttributes({goals: goalList, date});
         await attributesManager.savePersistentAttributes();
 
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals });
+        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: listToGoals(goalList) });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
