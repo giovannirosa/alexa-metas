@@ -23,7 +23,8 @@ module.exports = {
             HELP_MSG: `Você pode me dizer quais são as atividades que quer realizar hoje. Eu vou guardar e você pode verificar comigo ao longo do dia!`,
             GOODBYE_MSG: `Tchau! Siga firme nas suas metas!`,
             REFLECTOR_MSG: `Você acabou de acionar o {{intentName}}`,
-            ERROR_MSG: `Desculpe, eu não entendi o que você disse. Pode reformular?`,
+            ERROR_MSG1: `Desculpe, eu não entendi o que você disse. Pode reformular?`,
+            ERROR_MSG2: `Ops, eu tava distraída. Pode repetir por favor?`,
             ERROR_TIMEZONE_MSG: `Não consegui determinar seu fuso horário. Por favor verifique as configurações de seu aparelho e certifique-se de que um fuso horário está selecionado. Depois disso, reinicie a skill e tente novamente!`
         }
     },
