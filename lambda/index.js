@@ -42,7 +42,7 @@ const listToGoals = (list) => {
     return str.slice(0, n) + str.slice(n).replace(', ', ' e ');
 }
 
-const randomIndex = (max) => Math.random() * (max - 1) + 1;
+const randomIndex = (max) => Math.floor(Math.random() * (max - 1 + 1) + 1);
 
 /**
  * Handles LaunchRequest requests sent by Alexa when activities has been registered
