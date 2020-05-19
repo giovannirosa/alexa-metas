@@ -184,7 +184,10 @@ const DelGoalsIntentHandler = {
 
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
         const delGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
-        const purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
+        let purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
+        if (purgedGoals.length === 0) {
+            purgedGoals = null;
+        }
         
         
         console.log(purgedGoals);
@@ -192,9 +195,11 @@ const DelGoalsIntentHandler = {
         attributesManager.setPersistentAttributes({goals: purgedGoals});
         await attributesManager.savePersistentAttributes();
         
-        const goalsStr = listToGoals(purgedGoals);
-
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: goalsStr });
+        let speakOutput = handlerInput.t('NO_GOALS_MSG');
+        if (purgedGoals) {
+            speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: listToGoals(purgedGoals) });
+        }
+        
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .withShouldEndSession(false)
