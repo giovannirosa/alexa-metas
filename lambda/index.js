@@ -42,6 +42,8 @@ const listToGoals = (list) => {
     return str.slice(0, n) + str.slice(n).replace(', ', ' e ');
 }
 
+const randomPhrase = (myData) => myData[Math.floor(Math.random() * myData.length)];
+
 /**
  * Handles LaunchRequest requests sent by Alexa when activities has been registered
  * Note : this type of request is send when the user invokes your skill without providing a specific intent.
@@ -87,7 +89,7 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = handlerInput.t('WELCOME_MSG');
+        const speakOutput = randomPhrase(handlerInput.t('WELCOME_MSG'));
         const repromptOutput = handlerInput.t('WELCOME_REPROMPT_MSG');
 
         return handlerInput.responseBuilder
