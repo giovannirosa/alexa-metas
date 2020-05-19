@@ -14,6 +14,7 @@ module.exports = {
             WELCOME_BACK_REPROMPT_MSG: `Você quer adicionar ou remover alguma meta para hoje?`,
             NO_GOALS_MSG: `Parece que você não tem metas para hoje!`,
             REGISTER_GOALS_MSG: `Obrigada, eu vou lembrar que suas metas para hoje são {{goals}}.`,
+            CLEAN_GOALS_MSG: `Todas as atividades foram apagadas. Gostaria de incluir novas metas?`,
             HELP_MSG: `Você pode me dizer quais são as atividades que quer realizar hoje. Eu vou guardar e você pode verificar comigo ao longo do dia!`,
             GOODBYE_MSG: `Tchau! Siga firme nas suas metas!`,
             REFLECTOR_MSG: `Você acabou de acionar o {{intentName}}`,
