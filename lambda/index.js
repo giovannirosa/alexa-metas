@@ -214,7 +214,7 @@ const CleanGoalsIntentHandler = {
         return handlerInput.responseBuilder
             .speak(speakOutput)
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
-            // .withShouldEndSession(true) // force the skill to close the session after confirming the birthday date
+            .withShouldEndSession(false) // force the skill to close the session after confirming the birthday date
             .getResponse();
     }
 };
