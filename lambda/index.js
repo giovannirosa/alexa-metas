@@ -395,7 +395,7 @@ const LoadGoalsInterceptor = {
             const diffDays = currentDate.diff(storedDate, 'days');
             console.log(date, diffDays);
             if (diffDays > 0) {
-                
+                await attributesManager.deletePersistentAttributes();
             } else {
                 attributesManager.setSessionAttributes(sessionAttributes);
             }
