@@ -15,7 +15,7 @@ module.exports = {
             WELCOME_MSG4: 'Opa, pera ai, deixa eu pegar a minha caneta!<break time="1s"/> Pronto... quais são as metas de hoje?',
             WELCOME_REPROMPT_MSG: `Meu plano para hoje é ficar aqui na minha caixinha. Quais são os seus?`,
             WELCOME_BACK_MSG1:`Hm, deixa eu ver aqui...<break time="2s"/> Parece que suas metas para hoje são {{goals}}. Você quer adicionar outras ou remover alguma delas?`,
-            WELCOME_BACK_MSG2: `Cadê meu caderninho?!<break time="2s"/>  Ah, achei... suas atividades de hoje são {{goals}}. Quer adicionar ou remover alguma?`,
+            WELCOME_BACK_MSG2: `Puxa vida, cadê meu caderninho?!<break time="2s"/>  Ah, achei... suas atividades de hoje são {{goals}}. Quer adicionar ou remover alguma?`,
             WELCOME_BACK_REPROMPT_MSG: `Você quer adicionar ou remover alguma meta para hoje?`,
             NO_GOALS_MSG: `Parece que você não tem metas para hoje! Quer incluir alguma?`,
             REGISTER_GOALS_MSG: `Obrigada, eu vou lembrar que suas metas para hoje são {{goals}}. Gostaria de incluir ou retirar alguma?`,
