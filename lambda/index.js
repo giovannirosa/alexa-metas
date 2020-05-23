@@ -100,42 +100,6 @@ const LaunchRequestHandler = {
 };
 
 /**
- * Handles GoalsCaptureIntent requests sent by Alexa (when a user specify activities)
- * Note : this request is sent when the user makes a request that corresponds to GoalsCaptureIntent intent defined in your intent schema.
- */
-const GoalsIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GoalsCaptureIntent';
-    },
-    async handle(handlerInput) {
-        const { attributesManager, requestEnvelope } = handlerInput;
-        const sessionAttributes = attributesManager.getSessionAttributes() || {};
-        
-        const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
-        
-        let goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
-        if (storedGoals) {
-            const addGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
-            goalList = [...storedGoals, ...addGoals];
-            console.log(goalList);
-        } else {
-            const date = moment();
-            console.log(goalList, date);
-            attributesManager.setPersistentAttributes({goals: goalList, date});
-        }
-
-        await attributesManager.savePersistentAttributes();
-
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: listToGoals(goalList) });
-        return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .withShouldEndSession(false)
-            .getResponse();
-    }
-};
-
-/**
  * Handles GoalsAdditionIntent requests sent by Alexa (when a user add activities)
  * Note : this request is sent when the user makes a request that corresponds to GoalsAdditionIntent intent defined in your intent schema.
  */
@@ -149,16 +113,21 @@ const AddGoalsIntentHandler = {
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
 
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
-        const addGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
-        const mergedGoals = [...storedGoals, ...addGoals];
         
-        
-        console.log(mergedGoals);
+        let goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
+        if (storedGoals) {
+            goalList = [...storedGoals, ...goalList];
+            console.log(goalList);
+            attributesManager.setPersistentAttributes({goals: goalList});
+        } else {
+            const date = moment();
+            console.log(goalList, date);
+            attributesManager.setPersistentAttributes({goals: goalList, date});
+        }
 
-        attributesManager.setPersistentAttributes({goals: mergedGoals});
         await attributesManager.savePersistentAttributes();
         
-        const goalsStr = listToGoals(mergedGoals);
+        const goalsStr = listToGoals(goalList);
         
         const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: goalsStr });
         return handlerInput.responseBuilder
@@ -441,7 +410,6 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         HasGoalsLaunchRequestHandler,
         LaunchRequestHandler,
-        GoalsIntentHandler,
         AddGoalsIntentHandler,
         DelGoalsIntentHandler,
         CleanGoalsIntentHandler,
