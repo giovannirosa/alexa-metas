@@ -399,7 +399,7 @@ const LoadGoalsInterceptor = {
             } else {
                 attributesManager.setSessionAttributes(sessionAttributes);
             }
-        } else if (sessionAttributes.hasOwnProperty('goals')) {
+        } else if (sessionAttributes.hasOwnProperty('goals') || sessionAttributes.hasOwnProperty('date')) {
             await attributesManager.deletePersistentAttributes();
         }
     }
