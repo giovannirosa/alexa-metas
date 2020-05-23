@@ -159,9 +159,6 @@ const DelGoalsIntentHandler = {
             const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
             const delGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
             let purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
-            if (purgedGoals.length === 0) {
-                purgedGoals = null;
-            }
             
             console.log(purgedGoals);
     
