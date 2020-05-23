@@ -193,10 +193,14 @@ const CleanGoalsIntentHandler = {
     },
     async handle(handlerInput) {
         const { attributesManager, requestEnvelope } = handlerInput;
-        attributesManager.setSessionAttributes({});
-        await attributesManager.deletePersistentAttributes();
+        
+        let speakOutput = handlerInput.t('DENIED_GOALS_MSG');
+        if (requestEnvelope.request.intent.confirmationStatus === 'CONFIRMED') {
+            attributesManager.setSessionAttributes({});
+            await attributesManager.deletePersistentAttributes();
+            speakOutput = handlerInput.t('CLEAN_GOALS_MSG');
+        }
 
-        const speakOutput = handlerInput.t('CLEAN_GOALS_MSG');
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .withShouldEndSession(false)
