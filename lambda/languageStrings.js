@@ -9,7 +9,7 @@ module.exports = {
     pt: {
         translation: {
             SKILL_NAME: 'metas do dia',
-            WELCOME_MSG1: `Olá! Bem vindo as suas metas do dia. Quais são seus planos para hoje?`, 
+            WELCOME_MSG1: `Olá! Bem vindo às suas metas diárias. Quais são seus planos para hoje?`, 
             WELCOME_MSG2: `Bem vindo à sua caixinha de metas. Quais são as metas do dia?`, 
             WELCOME_MSG3: `Ei, um novo dia pede metas renovadas. Que atividades você quer fazer hoje?`, 
             WELCOME_MSG4: 'Opa, pera ai, deixa eu pegar a minha caneta!<break time="1s"/> Pronto... quais são as metas de hoje?',
