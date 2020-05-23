@@ -378,28 +378,32 @@ const LoadGoalsInterceptor = {
         const goals = sessionAttributes.hasOwnProperty('goals') && sessionAttributes.goals.length > 0 ? sessionAttributes.goals : null;
         const date = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : null;
         
-        let userTimeZone;
-        try {
-            const upsServiceClient = serviceClientFactory.getUpsServiceClient();
-            userTimeZone = await upsServiceClient.getSystemTimeZone(deviceId);
-        } catch (error) {
-            if (error.name !== 'ServiceError') {
-                const errorSpeechText = handlerInput.t('ERROR_TIMEZONE_MSG');
-                return handlerInput.responseBuilder.speak(errorSpeechText).getResponse();
+        if (goals && date) {
+            let userTimeZone;
+            try {
+                const upsServiceClient = serviceClientFactory.getUpsServiceClient();
+                userTimeZone = await upsServiceClient.getSystemTimeZone(deviceId);
+            } catch (error) {
+                if (error.name !== 'ServiceError') {
+                    const errorSpeechText = handlerInput.t('ERROR_TIMEZONE_MSG');
+                    return handlerInput.responseBuilder.speak(errorSpeechText).getResponse();
+                }
+                console.log('error', error.message);
             }
-            console.log('error', error.message);
-        }
-        console.log('userTimeZone', userTimeZone);
-        
-        const currentDate = moment().tz(userTimeZone).startOf('day');
-        const storedDate = moment(date).tz(userTimeZone).startOf('day');
-        
-        const diffDays = currentDate.diff(storedDate, 'days');
-        console.log(date, diffDays);
-        if (diffDays > 0) {
+            console.log('userTimeZone', userTimeZone);
+            
+            const currentDate = moment().tz(userTimeZone).startOf('day');
+            const storedDate = moment(date).tz(userTimeZone).startOf('day');
+            
+            const diffDays = currentDate.diff(storedDate, 'days');
+            console.log(date, diffDays);
+            if (diffDays > 0) {
+                
+            } else {
+                attributesManager.setSessionAttributes(sessionAttributes);
+            }
+        } else {
             await attributesManager.deletePersistentAttributes();
-        } else if (goals) {
-            attributesManager.setSessionAttributes(sessionAttributes);
         }
     }
 }
