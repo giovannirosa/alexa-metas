@@ -26,6 +26,7 @@ module.exports = {
             GOODBYE_MSG2: `Até mais! Se estiver com dificuldade em se concentrar, tente focar em uma atividade por 25 minutos, dando 5 minutos de intervalo para esfriar a cabeça e retornar ao foco!`,
             GOODBYE_MSG3: `Até logo! Não seja tão duro consigo mesmo, as vezes precisamos de um tempo sem fazer nada de mais!`,
             GOODBYE_MSG4: `Tchauzinho! Eu sei que você está se dedicando hoje!`,
+            GOODBYE_MSG5: `Até a próxima! Se você cumprir todas as metas se sentirá muito bem, se não você sempre terá o amanhã!`,
             REFLECTOR_MSG: `Você acabou de acionar o {{intentName}}`,
             ERROR_MSG1: `Desculpe, eu não entendi o que você disse. Pode reformular?`,
             ERROR_MSG2: `Ops, eu tava distraída. Pode repetir por favor?`,
