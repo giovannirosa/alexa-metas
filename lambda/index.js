@@ -392,13 +392,30 @@ const LocalisationRequestInterceptor = {
  * */
 const LoadGoalsInterceptor = {
     async process(handlerInput) {
-        const { attributesManager } = handlerInput;
+        const { serviceClientFactory, attributesManager, requestEnvelope } = handlerInput;
         const sessionAttributes = await attributesManager.getPersistentAttributes() || {};
+        const deviceId = Alexa.getDeviceId(requestEnvelope);
 
         const goals = sessionAttributes.hasOwnProperty('goals') && sessionAttributes.goals.length > 0 ? sessionAttributes.goals : null;
         const date = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : null;
         
-        const diffDays = moment().diff(moment(date), 'days');
+        let userTimeZone;
+        try {
+            const upsServiceClient = serviceClientFactory.getUpsServiceClient();
+            userTimeZone = await upsServiceClient.getSystemTimeZone(deviceId);
+        } catch (error) {
+            if (error.name !== 'ServiceError') {
+                const errorSpeechText = handlerInput.t('ERROR_TIMEZONE_MSG');
+                return handlerInput.responseBuilder.speak(errorSpeechText).getResponse();
+            }
+            console.log('error', error.message);
+        }
+        console.log('userTimeZone', userTimeZone);
+        
+        const currentDate = moment().tz(userTimeZone).startOf('day');
+        const storedDate = moment(date).tz(userTimeZone).startOf('day');
+        
+        const diffDays = currentDate.diff(storedDate, 'days');
         console.log(date, diffDays);
         if (diffDays > 0) {
             await attributesManager.deletePersistentAttributes();
