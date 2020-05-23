@@ -375,7 +375,7 @@ const LoadGoalsInterceptor = {
         const sessionAttributes = await attributesManager.getPersistentAttributes() || {};
         const deviceId = Alexa.getDeviceId(requestEnvelope);
 
-        const goals = sessionAttributes.hasOwnProperty('goals') && sessionAttributes.goals.length > 0 ? sessionAttributes.goals : null;
+        const goals = sessionAttributes.hasOwnProperty('goals') && sessionAttributes.goals && sessionAttributes.goals.length > 0 ? sessionAttributes.goals : null;
         const date = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : null;
         
         if (goals && date) {
@@ -402,7 +402,7 @@ const LoadGoalsInterceptor = {
             } else {
                 attributesManager.setSessionAttributes(sessionAttributes);
             }
-        } else {
+        } else if (sessionAttributes.hasOwnProperty('goals')) {
             await attributesManager.deletePersistentAttributes();
         }
     }
