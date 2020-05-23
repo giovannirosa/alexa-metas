@@ -112,25 +112,29 @@ const AddGoalsIntentHandler = {
     async handle(handlerInput) {
         const { attributesManager, requestEnvelope } = handlerInput;
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
-
-        const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
         
-        let goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
-        if (storedGoals) {
-            goalList = [...storedGoals, ...goalList];
-            console.log(goalList);
-            attributesManager.setPersistentAttributes({goals: goalList});
-        } else {
-            const date = moment();
-            console.log(goalList, date);
-            attributesManager.setPersistentAttributes({goals: goalList, date});
+        let speakOutput = handlerInput.t('DENIED_GOALS_MSG');
+        if (requestEnvelope.request.intent.confirmationStatus === 'CONFIRMED') {
+            const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+        
+            let goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
+            if (storedGoals) {
+                goalList = [...storedGoals, ...goalList];
+                console.log(goalList);
+                attributesManager.setPersistentAttributes({goals: goalList});
+            } else {
+                const date = moment();
+                console.log(goalList, date);
+                attributesManager.setPersistentAttributes({goals: goalList, date});
+            }
+    
+            await attributesManager.savePersistentAttributes();
+            
+            const goalsStr = listToGoals(goalList);
+            
+            speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: goalsStr });
         }
 
-        await attributesManager.savePersistentAttributes();
-        
-        const goalsStr = listToGoals(goalList);
-        
-        const speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: goalsStr });
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .withShouldEndSession(false)
@@ -150,23 +154,25 @@ const DelGoalsIntentHandler = {
     async handle(handlerInput) {
         const { attributesManager, requestEnvelope } = handlerInput;
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
-
-        const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
-        const delGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
-        let purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
-        if (purgedGoals.length === 0) {
-            purgedGoals = null;
-        }
         
-        
-        console.log(purgedGoals);
-
-        attributesManager.setPersistentAttributes({goals: purgedGoals});
-        await attributesManager.savePersistentAttributes();
-        
-        let speakOutput = handlerInput.t('NO_GOALS_MSG');
-        if (purgedGoals) {
-            speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: listToGoals(purgedGoals) });
+        let speakOutput = handlerInput.t('DENIED_GOALS_MSG');
+        if (requestEnvelope.request.intent.confirmationStatus === 'CONFIRMED') {
+            const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+            const delGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
+            let purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
+            if (purgedGoals.length === 0) {
+                purgedGoals = null;
+            }
+            
+            console.log(purgedGoals);
+    
+            attributesManager.setPersistentAttributes({goals: purgedGoals});
+            await attributesManager.savePersistentAttributes();
+            
+            speakOutput = handlerInput.t('NO_GOALS_MSG');
+            if (purgedGoals) {
+                speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: listToGoals(purgedGoals) });
+            }
         }
         
         return handlerInput.responseBuilder
