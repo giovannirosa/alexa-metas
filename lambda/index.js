@@ -106,7 +106,8 @@ const LaunchRequestHandler = {
 const AddGoalsIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GoalsAdditionIntent';
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GoalsAdditionIntent'
+            && handlerInput.requestEnvelope.request.intent.confirmationStatus === 'CONFIRMED';
     },
     async handle(handlerInput) {
         const { attributesManager, requestEnvelope } = handlerInput;
