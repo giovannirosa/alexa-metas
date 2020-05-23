@@ -114,13 +114,12 @@ const GoalsIntentHandler = {
         
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
         
-        let goalList = [];
+        let goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
         if (storedGoals) {
             const addGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
             goalList = [...storedGoals, ...addGoals];
             console.log(goalList);
         } else {
-            const goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
             const date = moment();
             console.log(goalList, date);
             attributesManager.setPersistentAttributes({goals: goalList, date});
