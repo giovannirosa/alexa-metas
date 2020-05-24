@@ -1,0 +1,378 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "metas diárias",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": [
+            "não",
+            "esquece",
+            "cancelar"
+          ]
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "dá uma mão",
+            "preciso de assistência",
+            "me ajuda",
+            "não entendi",
+            "o que eu preciso fazer",
+            "qual o passo a passo",
+            "instruções",
+            "como funciona",
+            "ajuda"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": [
+            "chega",
+            "não quero mais",
+            "pare"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": [
+            "volte para o começo",
+            "início",
+            "voltar para o início"
+          ]
+        },
+        {
+          "name": "GoalsAdditionIntent",
+          "slots": [
+            {
+              "name": "goals",
+              "type": "AMAZON.SearchQuery",
+              "samples": [
+                "minhas metas são {goals}",
+                "eu planejo {goals}",
+                "meus planos são {goals}",
+                "quero fazer {goals}",
+                "adicione {goals}",
+                "adicionar {goals}",
+                "incluir {goals}",
+                "{goals}",
+                "eu quero {goals}",
+                "eu gostaria de {goals}"
+              ]
+            }
+          ],
+          "samples": [
+            "minhas metas de hoje são {goals}",
+            "hoje eu quero {goals}",
+            "eu quero {goals}",
+            "hoje eu tenho que fazer {goals}",
+            "eu quero adicionar {goals}",
+            "eu quero incluir {goals}",
+            "inclua {goals}",
+            "coloque {goals}",
+            "incluir {goals}",
+            "também quero fazer {goals}",
+            "adicionar {goals}",
+            "Gostaria de adicionar {goals}"
+          ]
+        },
+        {
+          "name": "GoalsRemovalIntent",
+          "slots": [
+            {
+              "name": "goals",
+              "type": "AMAZON.SearchQuery",
+              "samples": [
+                "remover {goals}",
+                "eu quero tirar {goals}",
+                "delete {goals}",
+                "tire {goals}",
+                "remova {goals}",
+                "{goals}",
+                "eu quero remover {goals}"
+              ]
+            }
+          ],
+          "samples": [
+            "remova {goals}",
+            "tire {goals}",
+            "tirar {goals}",
+            "remover {goals}",
+            "não quero mais {goals}",
+            "cancelar {goals}"
+          ]
+        },
+        {
+          "name": "GoalsCleaningIntent",
+          "slots": [],
+          "samples": [
+            "limpar atividades",
+            "limpar metas",
+            "resetar",
+            "limpar tudo",
+            "remover todas as tarefas",
+            "remover todas as metas",
+            "limpar todas as metas de hoje",
+            "limpe minhas metas"
+          ]
+        },
+        {
+          "name": "GoalsListingIntent",
+          "slots": [],
+          "samples": [
+            "quais são as metas do dia",
+            "o que eu prometi para hoje",
+            "listar atividades",
+            "diga minhas metas",
+            "que tarefas eu anotei hoje",
+            "quais são minha atividades",
+            "quais são minhas metas de hoje",
+            "listar metas"
+          ]
+        }
+      ],
+      "types": []
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "GoalsAdditionIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.1117890373846"
+          },
+          "slots": [
+            {
+              "name": "goals",
+              "type": "AMAZON.SearchQuery",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1117890373846.634688941678"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GoalsRemovalIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.454545126967"
+          },
+          "slots": [
+            {
+              "name": "goals",
+              "type": "AMAZON.SearchQuery",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.837062171941.31069196158"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GoalsCleaningIntent",
+          "confirmationRequired": true,
+          "prompts": {
+            "confirmation": "Confirm.Intent.582858867657"
+          },
+          "slots": []
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.303899476312.795077103633",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Eu nasci em Novembro. Em que mês você nasceu?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Qual o mês do seu nascimento?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.303899476312.985837334781",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Eu nasci no dia seis. Qual o dia do seu nascimento?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.303899476312.27341833344",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Eu nasci em dois mil e catorze, em que ano você nasceu?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent.428783338965",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Maneiro. Pelo que anotei aqui, hoje você vai {goals} ?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Que legal. Voce vai {goals} hoje. Certo?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Um belo plano para hoje. Então você quer {goals} ?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Anotado. então hoje você vai {goals} ?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Saquei. Hoje você quer {goals} . Correto?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1443712885291.317262162594",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Então, quais são os planos para hoje?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Quais são as metas para o dia de hoje?"
+          },
+          {
+            "type": "PlainText",
+            "value": "O que você planeja fazer hoje?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1117890373846.634688941678",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "O que você planeja fazer hoje?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Quais são as metas para o dia de hoje?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Então, quais são os planos para hoje?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Estava distraída aqui na minha caixinha. Pode repetir o que você quer adicionar?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Não entendi muito bem. Pode repetir o que mais gostaria de fazer?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent.1117890373846",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Saquei. Hoje você quer {goals} . Correto?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Anotado. então hoje você vai {goals} ?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Um belo plano para hoje. Então você quer {goals} ?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Que legal. Voce vai {goals} hoje. Certo?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Maneiro. Pelo que anotei aqui, hoje você vai {goals} ?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Deixa eu ver se entendi. Você quer adicionar {goals} . Acertei?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent.454545126967",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Vejamos aqui... então você não quer mais {goals} hoje?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.837062171941.31069196158",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Opa, não entendi. O que voce quer remover?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Pera ai que eu me perdi aqui. Você quer remover quais atividades?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Slot.837062171941.31069196158",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Hmmm agora sim... então você quer remover {goals} . isso?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Slot.494924477285.604661024109",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Peguei agora... você quer adicionar {goals} . Acertei?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Slot.200580412012.381009464556",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Anotado. Você quer {goals} hoje?"
+          }
+        ]
+      },
+      {
+        "id": "Confirm.Intent.582858867657",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Hm... começar do zero então. Você tem certeza que quer isso?"
+          },
+          {
+            "type": "PlainText",
+            "value": "Só pra ter certeza. Você deseja remover todas as metas?"
+          }
+        ]
+      }
+    ]
+  },
+  "version": "21"
+}
