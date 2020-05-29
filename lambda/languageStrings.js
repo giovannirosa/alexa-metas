@@ -21,7 +21,7 @@ module.exports = {
             REGISTER_GOALS_MSG: `Obrigada, eu vou lembrar que suas metas para hoje são {{goals}}. Gostaria de incluir ou retirar alguma?`,
             DENIED_GOALS_MSG: `Tudo bem, ação cancelada. Deseja mais alguma coisa?`,
             CLEAN_GOALS_MSG: `Todas as atividades foram apagadas. Gostaria de incluir novas metas?`,
-            HELP_MSG: `Você pode me dizer quais são as atividades que quer realizar hoje. Eu vou guardar e você pode verificar comigo ao longo do dia!`,
+            HELP_MSG: `Você pode me dizer quais são as atividades que quer realizar hoje. Eu vou guardar e você pode verificar comigo ao longo do dia! Você também pode adicionar, remover, listar ou limpar todas as metas.`,
             GOODBYE_MSG1: `Tchau! Siga firme nas suas metas!`,
             GOODBYE_MSG2: `Até mais! Se estiver com dificuldade em se concentrar, tente focar em uma atividade por 25 minutos, dando 5 minutos de intervalo para esfriar a cabeça e retornar ao foco!`,
             GOODBYE_MSG3: `Até logo! Não seja tão duro consigo mesmo, as vezes precisamos de um tempo sem fazer nada de mais!`,
