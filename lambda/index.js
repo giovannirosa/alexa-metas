@@ -73,7 +73,7 @@ const HasGoalsLaunchRequestHandler = {
             speakOutput = handlerInput.t('WELCOME_BACK_MSG' + randomIndex(2), { goals: goalsStr });
         }
         
-        const repromptOutput = handlerInput.t('WELCOME_REPROMPT_MSG');
+        const repromptOutput = handlerInput.t('WELCOME_BACK_REPROMPT_MSG');
         
         return handlerInput.responseBuilder
             .speak(speakOutput)
