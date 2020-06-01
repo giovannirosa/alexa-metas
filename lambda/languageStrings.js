@@ -28,8 +28,7 @@ module.exports = {
             GOODBYE_MSG4: `Tchauzinho! Eu sei que você está se dedicando hoje!`,
             GOODBYE_MSG5: `Até a próxima! Se você cumprir todas as metas se sentirá muito bem, se não você sempre terá o amanhã!`,
             REFLECTOR_MSG: `Você acabou de acionar o {{intentName}}`,
-            ERROR_MSG1: `Desculpe, eu não entendi o que você disse. Pode reformular?`,
-            ERROR_MSG2: `Ops, eu tava distraída. Pode repetir por favor?`,
+            ERROR_MSG: `Opa, um erro foi detectado no meu radar. Por favor repita ou comece novamente.`,
             ERROR_TIMEZONE_MSG: `Não consegui determinar seu fuso horário. Por favor verifique as configurações de seu aparelho e certifique-se de que um fuso horário está selecionado. Depois disso, reinicie a skill e tente novamente!`
         }
     },
