@@ -55,7 +55,9 @@ const HasGoalsLaunchRequestHandler = {
 
         const goals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : null;
 
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest'
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest' || 
+            (Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            Alexa.getRequestType(handlerInput.requestEnvelope) === 'AMAZON.NavigateHomeIntent')
             && goals;
     },
     async handle(handlerInput) {
@@ -88,7 +90,9 @@ const HasGoalsLaunchRequestHandler = {
  */
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest' ||
+        (Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
+            Alexa.getRequestType(handlerInput.requestEnvelope) === 'AMAZON.NavigateHomeIntent');
     },
     handle(handlerInput) {
         const speakOutput = handlerInput.t('WELCOME_MSG' + randomIndex(4));
