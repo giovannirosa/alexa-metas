@@ -222,7 +222,7 @@ const ListGoalsIntentHandler = {
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : [];
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
-        if (storedGoals.length > 0 ) {
+        if (storedGoals && storedGoals.length > 0 ) {
             const goalsStr = listToGoals(storedGoals);
             const speakOutput = handlerInput.t('WELCOME_BACK_MSG' + randomIndex(2), { goals: goalsStr });
         }
