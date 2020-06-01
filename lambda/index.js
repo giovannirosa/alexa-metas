@@ -158,7 +158,7 @@ const DelGoalsIntentHandler = {
         
         let speakOutput = handlerInput.t('DENIED_GOALS_MSG');
         if (requestEnvelope.request.intent.confirmationStatus === 'CONFIRMED') {
-            const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
+            const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : [];
             const delGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
             let purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
             
