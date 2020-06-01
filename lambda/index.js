@@ -168,7 +168,7 @@ const DelGoalsIntentHandler = {
             await attributesManager.savePersistentAttributes();
             
             speakOutput = handlerInput.t('NO_GOALS_MSG');
-            if (purgedGoals) {
+            if (purgedGoals && purgedGoals.length > 0) {
                 speakOutput = handlerInput.t('REGISTER_GOALS_MSG', { goals: listToGoals(purgedGoals) });
             }
         }
