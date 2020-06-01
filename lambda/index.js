@@ -314,7 +314,7 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         console.log(`~~~~ Error handled: ${error.message}`);
-        const speakOutput = handlerInput.t('ERROR_MSG' + randomIndex(2));
+        const speakOutput = handlerInput.t('ERROR_MSG');
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
