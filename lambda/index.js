@@ -224,7 +224,7 @@ const ListGoalsIntentHandler = {
         
         console.log(sessionAttributes);
         
-        const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : [];
+        const storedGoals = sessionAttributes.goals ? sessionAttributes.goals : [];
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
         if (storedGoals && storedGoals.length > 0 ) {
