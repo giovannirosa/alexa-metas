@@ -123,10 +123,12 @@ const AddGoalsIntentHandler = {
                 goalList = [...storedGoals, ...goalList];
                 console.log(goalList);
                 attributesManager.setPersistentAttributes({goals: goalList});
+                attributesManager.setSessionAttributes({goals: goalList});
             } else {
                 const date = moment();
                 console.log(goalList, date);
                 attributesManager.setPersistentAttributes({goals: goalList, date});
+                attributesManager.setSessionAttributes({goals: goalList, date});
             }
     
             await attributesManager.savePersistentAttributes();
@@ -165,6 +167,7 @@ const DelGoalsIntentHandler = {
             console.log(purgedGoals);
     
             attributesManager.setPersistentAttributes({goals: purgedGoals});
+            attributesManager.setSessionAttributes({goals: purgedGoals});
             await attributesManager.savePersistentAttributes();
             
             speakOutput = handlerInput.t('NO_GOALS_MSG');
