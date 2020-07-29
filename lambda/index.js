@@ -120,7 +120,7 @@ const AddGoalsIntentHandler = {
         
             let goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
             if (storedGoals) {
-                goalList = [...storedGoals, ...goalList];
+                goalList = [...new Set([...storedGoals, ...goalList])];
                 console.log(goalList);
                 attributesManager.setPersistentAttributes({goals: goalList});
                 attributesManager.setSessionAttributes({goals: goalList});
@@ -221,6 +221,8 @@ const ListGoalsIntentHandler = {
     async handle(handlerInput) {
         const { attributesManager, requestEnvelope } = handlerInput;
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
+        
+        console.log(sessionAttributes);
         
         const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : [];
         
