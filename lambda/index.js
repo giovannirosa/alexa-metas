@@ -44,11 +44,11 @@ const listToGoals = (list) => {
 
 const randomIndex = (max) => Math.floor(Math.random() * max + 1);
 
-const updateInfo = async (attributesManager, goals, date) => {
-    attributesManager.setPersistentAttributes({goals, date});
-    attributesManager.setSessionAttributes({goals, date});
-    await attributesManager.savePersistentAttributes();
-}
+// const updateInfo = async (attributesManager, goals, date) => {
+//     attributesManager.setPersistentAttributes({goals, date});
+//     attributesManager.setSessionAttributes({goals, date});
+//     await attributesManager.savePersistentAttributes();
+// }
 
 /**
  * Handles LaunchRequest requests sent by Alexa when activities has been registered
@@ -230,7 +230,7 @@ const ListGoalsIntentHandler = {
         
         const storedGoals = sessionAttributes.goals ? sessionAttributes.goals : [];
         
-        console.log('ListGoalsIntentHandler',sessionAttributes,storedGoals);
+        console.log('ListGoalsIntentHandler',sessionAttributes,storedGoals,storedGoals.length, storedGoals && storedGoals.length > 0);
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
         if (storedGoals && storedGoals.length > 0 ) {
