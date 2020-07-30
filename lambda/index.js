@@ -44,6 +44,10 @@ const listToGoals = (list) => {
 
 const randomIndex = (max) => Math.floor(Math.random() * max + 1);
 
+const updateInfo = (goals, date) => {
+    attributesManager.setPersistentAttributes({goals: goalList, date});
+}
+
 /**
  * Handles LaunchRequest requests sent by Alexa when activities has been registered
  * Note : this type of request is send when the user invokes your skill without providing a specific intent.
@@ -405,11 +409,13 @@ const LoadGoalsInterceptor = {
             const diffDays = currentDate.diff(storedDate, 'days');
             console.log(date, diffDays);
             if (diffDays > 0) {
+                attributesManager.setSessionAttributes({});
                 await attributesManager.deletePersistentAttributes();
             } else {
                 attributesManager.setSessionAttributes(sessionAttributes);
             }
         } else if (sessionAttributes.hasOwnProperty('goals') || sessionAttributes.hasOwnProperty('date')) {
+            attributesManager.setSessionAttributes({});
             await attributesManager.deletePersistentAttributes();
         }
     }
