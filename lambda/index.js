@@ -222,9 +222,9 @@ const ListGoalsIntentHandler = {
         const { attributesManager, requestEnvelope } = handlerInput;
         const sessionAttributes = attributesManager.getSessionAttributes() || {};
         
-        console.log(sessionAttributes);
-        
         const storedGoals = sessionAttributes.goals ? sessionAttributes.goals : [];
+        
+        console.log('ListGoalsIntentHandler',sessionAttributes,storedGoals);
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
         if (storedGoals && storedGoals.length > 0 ) {
