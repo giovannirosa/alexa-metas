@@ -235,7 +235,7 @@ const ListGoalsIntentHandler = {
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
         if (storedGoals && storedGoals.length > 0 ) {
             const goalsStr = listToGoals(storedGoals);
-            const speakOutput = handlerInput.t('WELCOME_BACK_MSG' + randomIndex(2), { goals: goalsStr });
+            speakOutput = handlerInput.t('WELCOME_BACK_MSG' + randomIndex(2), { goals: goalsStr });
         }
         
         return handlerInput.responseBuilder
