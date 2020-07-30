@@ -16,7 +16,7 @@
             "objetivos"
           ],
           "name": "Metas Diárias",
-          "description": "Com essa skill você pode falar sobre as suas metas diárias. Com elas guardadas pela Alexa, você pode retornar e verificar quais são suas metas para o dia. Essa skill é capaz de incluir metas, removê-las, limpar todas e listá-las.",
+          "description": "Com essa skill você pode falar sobre as suas metas diárias. Com elas guardadas pela Alexa, você pode retornar e verificar quais são suas metas para o dia. Essa skill é capaz de incluir metas, removê-las, limpar todas e listá-las.\n\nPara interagir com essa skill você precisa ser claro em suas ações, para:\n\n- Listar metas, você pode dizer \"alexa, peça para metas diárias listar metas\"\n- Adicionar metas, você pode dizer \"alexa, peça para metas diárias adicionar estudar\"\n- Remover metas, você pode dizer \"alexa, peça para metas diárias remover estudar\"\n- Limpar todas as metas, você pode dizer \"alexa, peça para metas diárias limpar metas\"\n\nVocê também pode invocar essa skill com \"Alexa, metas diárias\" que ela dirá suas metas e aguardará possíveis instruções.",
           "smallIconUri": "file://assets/images/pt-BR_smallIconUri.png",
           "largeIconUri": "file://assets/images/pt-BR_largeIconUri.png"
         }
@@ -25,7 +25,7 @@
         "isActive": false
       },
       "isAvailableWorldwide": false,
-      "testingInstructions": "Sample Testing Instructions.",
+      "testingInstructions": "Com essa skill você pode falar sobre as suas metas diárias. Com elas guardadas pela Alexa, você pode retornar e verificar quais são suas metas para o dia. Essa skill é capaz de incluir metas, removê-las, limpar todas e listá-las.\n\nPara interagir com essa skill você precisa ser claro em suas ações, para:\n\n- Listar metas, você pode dizer \"alexa, peça para metas diárias listar metas\"\n- Adicionar metas, você pode dizer \"alexa, peça para metas diárias adicionar estudar\"\n- Remover metas, você pode dizer \"alexa, peça para metas diárias remover estudar\"\n- Limpar todas as metas, você pode dizer \"alexa, peça para metas diárias limpar metas\"\n\nVocê também pode invocar essa skill com \"Alexa, metas diárias\" que ela dirá suas metas e aguardará possíveis instruções.",
       "category": "SELF_IMPROVEMENT",
       "distributionCountries": [
         "BR"
@@ -34,7 +34,7 @@
     "apis": {
       "custom": {
         "endpoint": {
-          "uri": "arn:aws:lambda:us-east-1:630286496137:function:22830d6f-075b-4b24-a486-bdc143212d63:Release_0"
+          "uri": "arn:aws:lambda:us-east-1:630286496137:function:22830d6f-075b-4b24-a486-bdc143212d63:Release_4"
         },
         "interfaces": []
       }

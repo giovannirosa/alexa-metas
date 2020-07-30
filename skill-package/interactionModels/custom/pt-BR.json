@@ -35,11 +35,7 @@
         },
         {
           "name": "AMAZON.NavigateHomeIntent",
-          "samples": [
-            "volte para o começo",
-            "início",
-            "voltar para o início"
-          ]
+          "samples": []
         },
         {
           "name": "GoalsAdditionIntent",
@@ -94,6 +90,7 @@
             }
           ],
           "samples": [
+            "retirar {goals}",
             "remova {goals}",
             "tire {goals}",
             "tirar {goals}",
@@ -374,5 +371,5 @@
       }
     ]
   },
-  "version": "21"
+  "version": "23"
 }
