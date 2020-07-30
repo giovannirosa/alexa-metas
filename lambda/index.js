@@ -388,6 +388,8 @@ const LoadGoalsInterceptor = {
         const goals = sessionAttributes.hasOwnProperty('goals') && sessionAttributes.goals && sessionAttributes.goals.length > 0 ? sessionAttributes.goals : null;
         const date = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : null;
         
+        console.log('LoadGoalsInterceptor',sessionAttributes,goals, date);
+        
         if (goals && date) {
             let userTimeZone;
             try {
