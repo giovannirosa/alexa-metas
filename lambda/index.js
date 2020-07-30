@@ -44,12 +44,6 @@ const listToGoals = (list) => {
 
 const randomIndex = (max) => Math.floor(Math.random() * max + 1);
 
-// const updateInfo = async (attributesManager, goals, date) => {
-//     attributesManager.setPersistentAttributes({goals, date});
-//     attributesManager.setSessionAttributes({goals, date});
-//     await attributesManager.savePersistentAttributes();
-// }
-
 /**
  * Handles LaunchRequest requests sent by Alexa when activities has been registered
  * Note : this type of request is send when the user invokes your skill without providing a specific intent.
@@ -123,13 +117,12 @@ const AddGoalsIntentHandler = {
         let speakOutput = handlerInput.t('DENIED_GOALS_MSG');
         if (requestEnvelope.request.intent.confirmationStatus === 'CONFIRMED') {
             const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : '';
-            const storedDate = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : null;
         
             let goalList = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
             if (storedGoals) {
                 goalList = [...new Set([...storedGoals, ...goalList])];
-                console.log('AddGoalsIntentHandler', goalList, storedDate);
-                attributesManager.setPersistentAttributes({goals: goalList, date: storedDate});
+                console.log('AddGoalsIntentHandler', goalList);
+                attributesManager.setPersistentAttributes({goals: goalList});
             } else {
                 const date = moment();
                 console.log('AddGoalsIntentHandler', goalList, date);
@@ -166,14 +159,12 @@ const DelGoalsIntentHandler = {
         let speakOutput = handlerInput.t('DENIED_GOALS_MSG');
         if (requestEnvelope.request.intent.confirmationStatus === 'CONFIRMED') {
             const storedGoals = sessionAttributes.hasOwnProperty('goals') ? sessionAttributes.goals : [];
-            const storedDate = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : null;
             const delGoals = goalsToList(Alexa.getSlotValue(requestEnvelope, 'goals'));
             let purgedGoals = storedGoals.filter(g => !delGoals.includes(g))
             
-            console.log('DelGoalsIntentHandler',purgedGoals,storedDate);
+            console.log('DelGoalsIntentHandler',purgedGoals);
     
-            attributesManager.setPersistentAttributes({goals: purgedGoals, date: storedDate});
-            // attributesManager.setSessionAttributes({goals: purgedGoals});
+            attributesManager.setPersistentAttributes({goals: purgedGoals});
             await attributesManager.savePersistentAttributes();
             
             speakOutput = handlerInput.t('NO_GOALS_MSG');
@@ -230,7 +221,7 @@ const ListGoalsIntentHandler = {
         
         const storedGoals = sessionAttributes.goals ? sessionAttributes.goals : [];
         
-        console.log('ListGoalsIntentHandler',sessionAttributes,storedGoals,storedGoals.length, storedGoals && storedGoals.length > 0);
+        console.log('ListGoalsIntentHandler',sessionAttributes,storedGoals);
         
         let speakOutput = handlerInput.t('NO_GOALS_MSG');
         if (storedGoals && storedGoals.length > 0 ) {
@@ -388,8 +379,6 @@ const LoadGoalsInterceptor = {
         const { serviceClientFactory, attributesManager, requestEnvelope } = handlerInput;
         const sessionAttributes = await attributesManager.getPersistentAttributes() || {};
         const deviceId = Alexa.getDeviceId(requestEnvelope);
-        
-        console.log(sessionAttributes, 'LoadGoalsInterceptor');
 
         const goals = sessionAttributes.hasOwnProperty('goals') && sessionAttributes.goals && sessionAttributes.goals.length > 0 ? sessionAttributes.goals : null;
         const date = sessionAttributes.hasOwnProperty('date') ? sessionAttributes.date : null;
